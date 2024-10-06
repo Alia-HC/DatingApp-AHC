@@ -3,17 +3,24 @@ using System.Text;
 using API.Data;
 using API.DTOs;
 using API.Entities;
+using API.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers;
 
-public class AccountController(DataContext context) : BaseApicontroller
+public class AccountController(
+    DataContext context,
+    ITokenService tokenService) : BaseApicontroller
 {
     [HttpPost("register")]
-    public async Task<ActionResult<AppUser>> RegisterAsync(RegisterRequest request)
+    public async Task<ActionResult<UserResponse>> RegisterAsync(RegisterRequest request)
     {
-        if (await UserExistsAsync(request.Username)) return BadRequest("Username already exists");
+        if (await UserExistsAsync(request.Username))
+        {
+            return BadRequest("Username already in use");
+        }
+
         using var hmac = new HMACSHA512();
         var user = new AppUser
         {
@@ -25,36 +32,37 @@ public class AccountController(DataContext context) : BaseApicontroller
         context.Users.Add(user);
         await context.SaveChangesAsync();
 
-        return user;
+        return new UserResponse
+        {
+            Username = user.UserName,
+            Token = tokenService.CreateToken(user)
+        };
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult<AppUser>> LoginAsync(LoginRequest request)
+    public async Task<ActionResult<UserResponse>> LoginAsync(LoginRequest request)
     {
         var user = await context.Users.FirstOrDefaultAsync(x =>
             x.UserName.ToLower() == request.UserName.ToLower());
-        
-        if(user == null)
-        {
+
+        if (user == null)
             return Unauthorized("Invalid username or password");
-        }
+        
 
         using var hmac = new HMACSHA512(user.PasswordSalt);
-
         var computeHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(request.Password));
 
-        for(int i=0; i< computeHash.Length; i++)
-        {
-            if(computeHash[i] != user.PasswordHash[i])
-            {
+        for (int i = 0; i < computeHash.Length; i++)
+            if (computeHash[i] != user.PasswordHash[i])
                 return Unauthorized("Invalid username or password");
-            }
-        }
-
-        return user;
+                
+        return new UserResponse
+        {
+            Username = user.UserName,
+            Token = tokenService.CreateToken(user)
+        };
     }
 
     private async Task<bool> UserExistsAsync(string username) =>
         await context.Users.AnyAsync(u => u.UserName.ToLower() == username.ToLower());
-    
 }
