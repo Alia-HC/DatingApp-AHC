@@ -24,6 +24,11 @@ export class NavComponent {
         console.log("Miau miau miau miauuuu");
         console.log(error);
       }
-    })
+    });
   }
+
+  logout(): void{
+    this.loggedIn = false;
+  }
+
 }
