@@ -8,9 +8,17 @@ import { athGuard } from './_guards/ath.guard';
 
 export const routes: Routes = [
     {path: "", component: HomeComponent},
-    {path: "members", component: MemberListComponent, canActivate: [athGuard]},
-    {path: "members/:id", component: MemberDetailComponent},
-    {path: "lists", component: ListsComponent},
-    {path: "messages", component: MessagesComponent},
+    {
+        path: "",
+        runGuardsAndResolvers: "always",
+        canActivate: [athGuard],
+        children:[
+            {path: "members", component: MemberListComponent, canActivate: [athGuard]},
+            {path: "members/:id", component: MemberDetailComponent},
+            {path: "lists", component: ListsComponent},
+            {path: "messages", component: MessagesComponent},
+        ]
+    },
+    
     {path: "**", component: HomeComponent, pathMatch: "full"},
 ];
