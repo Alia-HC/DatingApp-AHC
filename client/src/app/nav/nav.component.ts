@@ -1,8 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, Inject, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AccountService } from '../_services/account.service';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-nav',
@@ -14,6 +15,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 export class NavComponent {
   accountService = inject(AccountService);
   private router = inject(Router);
+  private toastr = inject(ToastrService);
   model: any = {};
 
   login(): void{
@@ -21,9 +23,8 @@ export class NavComponent {
       next: _ => {
         this.router.navigateByUrl("/members");
       },
-      error: error => {
-        console.log("Miau miau miau miauuuu");
-        console.log(error);
+      error: (error) => {
+        this.toastr.error(error.error);
       }
     });
   }
