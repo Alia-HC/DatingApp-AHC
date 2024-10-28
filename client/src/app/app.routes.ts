@@ -4,16 +4,16 @@ import { MemberListComponent } from './members/member-list/member-list.component
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
 import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
-import { athGuard } from './_guards/ath.guard';
+import { athGuard } from './_guards/auth.guard';
 
 export const routes: Routes = [
     {path: "", component: HomeComponent},
     {
         path: "",
         runGuardsAndResolvers: "always",
-        canActivate: [athGuard],
+        canActivate: [authGuard],
         children:[
-            {path: "members", component: MemberListComponent, canActivate: [athGuard]},
+            {path: "members", component: MemberListComponent, canActivate: [authGuard]},
             {path: "members/:id", component: MemberDetailComponent},
             {path: "lists", component: ListsComponent},
             {path: "messages", component: MessagesComponent},
