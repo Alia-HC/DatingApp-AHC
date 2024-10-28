@@ -6,9 +6,9 @@
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "api/weatherforecast",
-      "applicationUrl": "http://localhost:5191",
+      "applicationUrl": "http://localhost:5191;https://localhost:5191",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Production"
       }
     },
     
