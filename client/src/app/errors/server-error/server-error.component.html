@@ -1,1 +1,14 @@
-<p>server-error works!</p>
+<h4>Internal Server Error</h4>
+@if(error){
+    <h5 class="text-danger">Error: {{error.message}}</h5>
+    <p class="font-weight-bold">Note: This error is caused by the API, not Angular</p>
+    <ol>
+        <li>Open Dev Tools ...t</li>
+        <li>Examine the failing URL</li>
+        <li>Open Postman to reproduce the error...</li>
+    </ol>
+    <p class="font-weight-bold">Stack trace</p>
+    <code class="mt-5" style="background-color: rgb(229, 160, 160);">
+        {{error.details}}
+    </code>
+}
