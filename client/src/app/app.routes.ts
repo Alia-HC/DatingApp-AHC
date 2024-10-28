@@ -4,7 +4,8 @@ import { MemberListComponent } from './members/member-list/member-list.component
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
 import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
-import { athGuard } from './_guards/auth.guard';
+import { authGuard } from './_guards/auth.guard';
+import { TestErrorsComponent } from './erros/test-errors/test-errors.component';
 
 export const routes: Routes = [
     {path: "", component: HomeComponent},
@@ -20,5 +21,6 @@ export const routes: Routes = [
         ]
     },
     
+    {path: "errors", component: TestErrorsComponent},
     {path: "**", component: HomeComponent, pathMatch: "full"},
 ];
