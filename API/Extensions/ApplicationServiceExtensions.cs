@@ -2,20 +2,21 @@ using API.Data;
 using API.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.Extensions;
-
-public static class ApplicationServiceExtensions
+namespace API.Extensions
 {
-    public static IServiceCollection AddApplicationService(this IServiceCollection services, IConfiguration config)
+    public static class ApplicationServiceExtensions
     {
-        services.AddControllers();
-        services.AddDbContext<DataContext>(opt =>
+        public static IServiceCollection AddApplicationService(this IServiceCollection services, IConfiguration config)
         {
-            opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
-        });
-        services.AddCors();
-        services.AddScoped<ITokenService, TokenService>();
+            services.AddControllers();
+            services.AddDbContext<DataContext>(opt =>
+            {
+                opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
+            });
+            services.AddCors();
+            services.AddScoped<ITokenService, TokenService>();
 
-        return services;
+            return services;
+        }
     }
 }

@@ -15,7 +15,7 @@ namespace API.Data.Migrations
                 table: "Users",
                 type: "BLOB",
                 nullable: false,
-                defaultValue: new byte[0]);
+                defaultValue: Array.Empty<byte>());
 
             migrationBuilder.AddColumn<byte[]>(
                 name: "PasswordSalt",

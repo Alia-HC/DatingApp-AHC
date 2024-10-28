@@ -1,12 +1,13 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace API.DTOs;
-
-public class RegisterRequest
+namespace API.DTOs
 {
-    [Required]
-    public required string Username { get; set; }
+    public class RegisterRequest
+    {
+        [Required]
+        public required string Username { get; set; }
 
-    [Required]
-    public required string Password { get; set; }
+        [Required]
+        public required string Password { get; set; }
+    }
 }

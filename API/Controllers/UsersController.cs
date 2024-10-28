@@ -5,42 +5,43 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.Controllers;
-
-[Authorize]
-public class UsersController : BaseApicontroller
+namespace API.Controllers
 {
-    private readonly DataContext _context;
-
-    public UsersController(DataContext context)
+    [Authorize]
+    public class UsersController : BaseApicontroller
     {
-        _context = context;
-    }
+        private readonly DataContext _context;
 
-    [AllowAnonymous]
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<AppUser>>> GetUsersAsync()
-    {
-        var users = await _context.Users.ToListAsync();
+        public UsersController(DataContext context)
+        {
+            _context = context;
+        }
 
-        return users;
-    }
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<AppUser>>> GetUsersAsync()
+        {
+            var users = await _context.Users.ToListAsync();
 
-   [Authorize]
-    [HttpGet("{id:int}")] 
-    public async Task<ActionResult<AppUser>> GetUsersByIdAsync(int id)
-    {
-        var user = await _context.Users.FindAsync(id);
+            return users;
+        }
 
-        if (user == null) return NotFound();
+       [Authorize]
+        [HttpGet("{id:int}")] 
+        public async Task<ActionResult<AppUser>> GetUsersByIdAsync(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
 
-        return user;
-    }
+            if (user == null) return NotFound();
 
-    [HttpGet("{name}")] 
-    public ActionResult<string> Ready(string name)
-    {
-        return $"Hi {name}";
-    }
+            return user;
+        }
+
+        [HttpGet("{name}")] 
+        public ActionResult<string> Ready(string name)
+        {
+            return $"Hi {name}";
+        }
     
+    }
 }

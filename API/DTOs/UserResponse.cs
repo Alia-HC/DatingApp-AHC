@@ -1,7 +1,8 @@
-namespace API.DTOs;
-
-public class UserResponse
+namespace API.DTOs
 {
-    public required string Username { get; set; }
-    public required string Token { get; set; }
+    public class UserResponse
+    {
+        public required string Username { get; set; }
+        public required string Token { get; set; }
+    }
 }

@@ -1,7 +1,8 @@
-namespace API.DTOs;
-
-public class LoginRequest
+namespace API.DTOs
 {
-    public required string UserName { get; set;}
-    public required string Password { get; set;}
+    public class LoginRequest
+    {
+        public required string UserName { get; set;}
+        public required string Password { get; set;}
+    }
 }
