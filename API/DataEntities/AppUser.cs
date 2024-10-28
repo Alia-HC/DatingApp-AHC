@@ -1,7 +1,6 @@
-using System.Data.SqlTypes;
 using API.Extensions;
 
-namespace API.Entities
+namespace API.DataEntities
 {
 
     public class AppUser
@@ -17,9 +16,9 @@ namespace API.Entities
 
         public required string KnownAs { get; set; }
 
-        public DateTime Created { get; set; }
+        public DateTime Created { get; set; } = DateTime.Now;
 
-        public DateTime LastActive { get; set; }
+        public DateTime LastActive { get; set; } = DateTime.Now;
 
         public required string Gender { get; set; }
 
